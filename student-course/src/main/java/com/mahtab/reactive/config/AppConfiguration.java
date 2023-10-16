@@ -3,7 +3,6 @@ package com.mahtab.reactive.config;
 import com.mahtab.reactive.model.Student;
 import com.mahtab.reactive.service.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.flywaydb.core.FlywayExecutor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
