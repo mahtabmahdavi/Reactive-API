@@ -37,4 +37,20 @@ public class CourseController {
     Flux<Course> readAll() {
         return courseService.readAll();
     }
+
+    @GetMapping(value = "/{id}")
+    Mono<ResponseEntity<Object>> readById(@PathVariable("id") Long id) {
+        return courseService.readById(id)
+                .map(desiredCourse -> ResponseEntity.status(HttpStatus.OK)
+                        .body(desiredCourse))
+                .onErrorResume(e -> {
+                    if (e instanceof CustomException) {
+                        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                .body(e.getMessage()));
+                    } else {
+                        return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("Internal Server Error"));
+                    }
+                });
+    }
 }
