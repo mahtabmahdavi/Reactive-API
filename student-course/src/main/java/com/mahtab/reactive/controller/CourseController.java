@@ -1,8 +1,8 @@
 package com.mahtab.reactive.controller;
 
 import com.mahtab.reactive.exception.CustomException;
-import com.mahtab.reactive.model.Student;
-import com.mahtab.reactive.service.StudentService;
+import com.mahtab.reactive.model.Course;
+import com.mahtab.reactive.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +12,14 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/students")
-public class StudentController {
+@RequestMapping("api/v1/courses")
+public class CourseController {
 
-    private final StudentService studentService;
+    private final CourseService courseService;
 
     @PostMapping("create")
-    Mono<ResponseEntity<Object>> create(@RequestBody Student student) {
-        return studentService.create(student)
+    Mono<ResponseEntity<Object>> create(@RequestBody Course course) {
+        return courseService.create(course)
                 .map(createdStudent -> ResponseEntity.status(HttpStatus.CREATED)
                         .body(createdStudent))
                 .onErrorResume(e -> {
@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @GetMapping
-    Flux<Student> readAll() {
-        return studentService.readAll();
+    Flux<Course> readAll() {
+        return courseService.readAll();
     }
 }
