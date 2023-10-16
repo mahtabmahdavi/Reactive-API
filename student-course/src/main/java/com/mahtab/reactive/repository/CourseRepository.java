@@ -6,5 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface CourseRepository extends ReactiveCrudRepository<Course, Long> {
 
-    Mono<Course> findByTitle(String title);
+    Mono<Course> findByTitleIgnoreCase(String title);
 }
