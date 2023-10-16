@@ -13,10 +13,18 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(name = "students")
 public class Student {
     @Id
-    @Column("id")
+    @Column(value = "id")
     private Long id;
+
+    @Column(value = "first_name")
     private String firstName;
+
+    @Column(value = "last_name")
     private String lastName;
+
+    @Column(value = "average")
     private Double average;
+
+    @Column(value = "age")
     private Integer age;
 }
