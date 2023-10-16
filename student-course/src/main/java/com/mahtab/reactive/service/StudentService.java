@@ -13,11 +13,11 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    private Mono<Student> create(Student newStudent) {
+    public Mono<Student> create(Student newStudent) {
         return studentRepository.save(newStudent);
     }
 
-    private Flux<Student> readAll() {
+    public Flux<Student> readAll() {
         return studentRepository.findAll();
     }
 }
