@@ -10,8 +10,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "students")
-public class Student {
+@Table(name = "people")
+public class Person {
     @Id
     @Column(value = "id")
     private Long id;
@@ -21,9 +21,6 @@ public class Student {
 
     @Column(value = "last_name")
     private String lastName;
-
-    @Column(value = "average")
-    private Double average;
 
     @Column(value = "age")
     private Integer age;

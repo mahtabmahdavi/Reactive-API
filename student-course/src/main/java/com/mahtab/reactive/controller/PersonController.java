@@ -1,8 +1,8 @@
 package com.mahtab.reactive.controller;
 
 import com.mahtab.reactive.exception.CustomException;
-import com.mahtab.reactive.model.Student;
-import com.mahtab.reactive.service.StudentService;
+import com.mahtab.reactive.model.Person;
+import com.mahtab.reactive.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +12,16 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/students")
-public class StudentController {
+@RequestMapping("api/v1/people")
+public class PersonController {
 
-    private final StudentService studentService;
+    private final PersonService personService;
 
     @PostMapping("create")
-    Mono<ResponseEntity<Object>> create(@RequestBody Student student) {
-        return studentService.create(student)
-                .map(createdStudent -> ResponseEntity.status(HttpStatus.CREATED)
-                        .body(createdStudent))
+    Mono<ResponseEntity<Object>> create(@RequestBody Person person) {
+        return personService.create(person)
+                .map(createdPerson -> ResponseEntity.status(HttpStatus.CREATED)
+                        .body(createdPerson))
                 .onErrorResume(e -> {
                     if (e instanceof CustomException) {
                         return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @GetMapping
-    Flux<Student> readAll() {
-        return studentService.readAll();
+    Flux<Person> readAll() {
+        return personService.readAll();
     }
 }

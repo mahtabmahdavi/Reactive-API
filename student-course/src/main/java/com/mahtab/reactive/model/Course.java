@@ -18,7 +18,4 @@ public class Course {
 
     @Column(value = "title")
     private String title;
-
-    @Column(value = "teacher")
-    private String teacher;
 }
