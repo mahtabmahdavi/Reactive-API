@@ -1,7 +1,7 @@
 package com.mahtab.reactive.controller;
 
 import com.mahtab.reactive.exception.CustomException;
-import com.mahtab.reactive.model.Person;
+import com.mahtab.reactive.model.entity.Person;
 import com.mahtab.reactive.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

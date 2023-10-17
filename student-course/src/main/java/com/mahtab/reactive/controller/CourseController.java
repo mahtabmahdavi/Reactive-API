@@ -1,7 +1,7 @@
 package com.mahtab.reactive.controller;
 
 import com.mahtab.reactive.exception.CustomException;
-import com.mahtab.reactive.model.Course;
+import com.mahtab.reactive.model.entity.Course;
 import com.mahtab.reactive.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

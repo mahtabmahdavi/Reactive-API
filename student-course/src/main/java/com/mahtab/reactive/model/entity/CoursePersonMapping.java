@@ -1,4 +1,4 @@
-package com.mahtab.reactive.model;
+package com.mahtab.reactive.model.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

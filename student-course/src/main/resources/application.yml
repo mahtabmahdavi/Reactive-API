@@ -10,6 +10,8 @@ spring:
     password: mahtab238
 
   flyway:
+    enabled: true
+    baseline-on-migrate: true
     url: jdbc:postgresql://localhost:5432/spring_reactive
     user: postgres
     password: mahtab238

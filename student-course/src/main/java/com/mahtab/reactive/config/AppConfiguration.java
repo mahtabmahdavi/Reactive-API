@@ -1,7 +1,9 @@
 package com.mahtab.reactive.config;
 
-import com.mahtab.reactive.model.Course;
-import com.mahtab.reactive.model.Person;
+import com.mahtab.reactive.model.entity.Course;
+import com.mahtab.reactive.model.entity.CoursePersonMapping;
+import com.mahtab.reactive.model.entity.Person;
+import com.mahtab.reactive.repository.CoursePersonMappingRepository;
 import com.mahtab.reactive.service.CourseService;
 import com.mahtab.reactive.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class AppConfiguration {
+
+    private final CoursePersonMappingRepository mappingRepository;
 
     @Bean
     public CommandLineRunner personRunner(PersonService personService) {
@@ -34,6 +38,25 @@ public class AppConfiguration {
                 courseService.create(
                         Course.builder()
                                 .title("math_" + i)
+                                .build()).subscribe();
+            }
+            coursePersonRunner();
+        };
+    }
+
+    @Bean
+    public CommandLineRunner coursePersonRunner() {
+        return args -> {
+            for (Long i = 1L; i < 10; i++) {
+                mappingRepository.save(
+                        CoursePersonMapping.builder()
+                                .course(i)
+                                .person(i * 2)
+                                .build()).subscribe();
+                mappingRepository.save(
+                        CoursePersonMapping.builder()
+                                .course(i)
+                                .person(i * 3)
                                 .build()).subscribe();
             }
         };

@@ -1,8 +1,6 @@
-package com.mahtab.reactive.model;
-
+package com.mahtab.reactive.model.dto;
 
 import lombok.*;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -14,5 +12,5 @@ import java.util.List;
 public class CourseDto {
 
     private String title;
-    private List<Person> participants;
+    private List<PersonDto> participants;
 }
