@@ -20,8 +20,4 @@ public class CoursePersonMapping {
 
         @Column(value = "person")
         private final Long person;
-
-        public static CoursePersonMapping of(Course course, Person person) {
-                return new CoursePersonMapping(null, course.getId(), person.getId());
-        }
 }
