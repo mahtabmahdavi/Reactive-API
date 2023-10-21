@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 
@@ -43,15 +42,22 @@ public class CourseService {
                         courseRepository.findById(request.getCourseId())
                                 .switchIfEmpty(Mono.error(new CustomException("This Course doesn't exist")))
                                 .flatMap(desiredCourse ->
-                                        mappingRepository.save(CoursePersonMapping.builder()
-                                                        .course(request.getCourseId())
-                                                        .person(request.getPersonId())
-                                                        .build())
-                                                .switchIfEmpty(Mono.error(new CustomException("Doesn't save")))
-                                                .flatMap(savedCoursePerson ->
-                                                        convertCoursePersonMappingToCoursePersonDto(
-                                                                Mono.just(desiredCourse), Mono.just(desiredPerson))
-                                                )
+                                        mappingRepository.existsByCourseAndPerson(request.getCourseId(), request.getPersonId())
+                                                .flatMap(mappingExists -> {
+                                                    if (mappingExists) {
+                                                        return Mono.error(new CustomException("You already choose this course"));
+                                                    } else {
+                                                        return mappingRepository.save(CoursePersonMapping.builder()
+                                                                        .course(request.getCourseId())
+                                                                        .person(request.getPersonId())
+                                                                        .build())
+                                                                .flatMap(savedCoursePerson ->
+                                                                        convertCoursePersonMappingToCoursePersonDto(
+                                                                                Mono.just(desiredCourse), Mono.just(desiredPerson)
+                                                                        )
+                                                                );
+                                                    }
+                                                })
                                 )
                 );
     }
@@ -61,14 +67,13 @@ public class CourseService {
                 .delayElements(Duration.ofSeconds(1));
     }
 
-    public Mono<Object> readById(Long id) {
-        return courseRepository.findById(id)
-                .switchIfEmpty(Mono.error(new CustomException("This Course was Not found")))
-                .flatMap(course -> personRepository.findByCourse(id)
-                        .collectList()
-                        .publishOn(Schedulers.boundedElastic())
-                        .map(people -> new CourseDto(course.getTitle(), personService.convertPersonToPersonDto(people))));
-    }
+//    public Mono<Object> readById(Long id) {
+//        return courseRepository.findById(id)
+//                .switchIfEmpty(Mono.error(new CustomException("This Course was Not found")))
+//                .flatMap(course -> personRepository.findPeopleByCourseId(id)
+//                        .collectList()
+//                        .map(people -> new CourseDto(course.getTitle(), personService.convertPersonToPersonDto(people))));
+//    }
 
     public Mono<CoursePersonResponse> convertCoursePersonMappingToCoursePersonDto(
             Mono<Course> desiredCourse, Mono<Person> desiredPerson) {

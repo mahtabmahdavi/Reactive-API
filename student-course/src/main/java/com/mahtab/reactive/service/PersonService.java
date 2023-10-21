@@ -33,12 +33,12 @@ public class PersonService {
                 .delayElements(Duration.ofSeconds(1));
     }
 
-    public List<PersonDto> convertPersonToPersonDto(List<Person> people) {
-        return people.stream()
-                .map(person -> PersonDto.builder()
-                        .firstName(person.getFirstName())
-                        .lastName(person.getLastName())
-                        .build())
-                .collect(Collectors.toList());
-    }
+//    public List<PersonDto> convertPersonToPersonDto(Flux<Person> people) {
+//        return people.stream()
+//                .map(person -> PersonDto.builder()
+//                        .firstName(person.getFirstName())
+//                        .lastName(person.getLastName())
+//                        .build())
+//                .collect(Collectors.toList());
+//    }
 }
