@@ -3,7 +3,6 @@ package com.mahtab.reactive.service;
 import com.mahtab.reactive.exception.CustomException;
 import com.mahtab.reactive.model.request_response.CoursePersonRequest;
 import com.mahtab.reactive.model.entity.Course;
-import com.mahtab.reactive.model.dto.CourseDto;
 import com.mahtab.reactive.model.entity.CoursePersonMapping;
 import com.mahtab.reactive.model.entity.Person;
 import com.mahtab.reactive.model.request_response.CoursePersonResponse;
@@ -66,14 +65,6 @@ public class CourseService {
         return courseRepository.findAll()
                 .delayElements(Duration.ofSeconds(1));
     }
-
-//    public Mono<Object> readById(Long id) {
-//        return courseRepository.findById(id)
-//                .switchIfEmpty(Mono.error(new CustomException("This Course was Not found")))
-//                .flatMap(course -> personRepository.findPeopleByCourseId(id)
-//                        .collectList()
-//                        .map(people -> new CourseDto(course.getTitle(), personService.convertPersonToPersonDto(people))));
-//    }
 
     public Mono<CoursePersonResponse> convertCoursePersonMappingToCoursePersonDto(
             Mono<Course> desiredCourse, Mono<Person> desiredPerson) {

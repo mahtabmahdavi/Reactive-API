@@ -14,8 +14,7 @@ public interface PersonRepository extends ReactiveCrudRepository<Person, Long> {
     Mono<Person> findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 
     @Query("SELECT p FROM Person p " +
-            "JOIN CoursePersonMapping cpm ON p.id = cpm.person.id " +
-            "WHERE cpm.course.id = :courseId")
+            "INNER JOIN CoursePersonMapping cpm ON p.id = cpm.person " +
+            "WHERE cpm.course = :courseId")
     Flux<Person> findPeopleByCourseId(@Param("courseId") Long courseId);
-
 }
